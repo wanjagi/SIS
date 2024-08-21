@@ -146,36 +146,55 @@ Ext.define('SIS.view.main.PersonnelController', {
     },
 
 
-    onItemDbClick: function (sender, record) {
-        //Ext.Msg.confirm('Confirm', 'Are you sure?', 'onConfirm', this);
-        var grid = this.getView();
-        var selection = grid.getSelection()[0];
-        if (selection) {
-            var viewWindow = Ext.create('SIS.view.main.PersonnelForm', {
-                title: 'Record',
-
-                buttons: [
-                    /*{
-                        text:'Delete',
-                        handler:'onDeleteClick'
-                    },*/
-                    {
-                        text:'Save',
-                        handler:'onSaveClick'
+    onItemDbClick: function(view, record, item, index, e, eOpts) {
+        Ext.create('Ext.window.Window', {
+            title: 'Personnel Details',
+            modal: true,
+            width: 400,
+            layout: 'fit',
+            items: [
+                {
+                    xtype: 'panel',
+                    bodyPadding: 10,
+                    defaults: {
+                        xtype: 'displayfield',
+                        labelWidth: 120,
+                        anchor: '100%',
+                    },
+                    items: [
+                        {
+                            fieldLabel: 'Profile Picture',
+                            value: '<img src="http://localhost:8000/' + record.get('profile_picture') + '" style="height: 100px; width: 100px; border-radius: 50%;">',
+                            fieldStyle: 'text-align:center'
+                        },
+                        {
+                            fieldLabel: 'Name',
+                            value: record.get('name')
+                        },
+                        {
+                            fieldLabel: 'Email Address',
+                            value: record.get('email')
+                        },
+                        {
+                            fieldLabel: 'Registration',
+                            value: record.get('registration')
+                        },
+                        {
+                            fieldLabel: 'ID Number',
+                            value: record.get('idnumber')
+                        }
+                    ]
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Close',
+                    handler: function(button) {
+                        button.up('window').close();
                     }
-                ],
-                //record: selection
-
-                
-            }).show();
-            //load the current selsction into the form
-            var form = viewWindow.down('form');
-            form.loadRecord(selection);
-            editWindow.show();
-        } else {
-            Ext.Msg.alert('Error', 'Select a record to edit');
-        }
-
+                }
+            ]
+        }).show();
     },
 
     /*onDeleteSelectedClick: function() {

@@ -49,6 +49,13 @@ Ext.define('SIS.view.main.PersonnelForm', {
                     emptyText: 'ID number',
                     msgTarget: 'under'
                 },
+                {
+                    xtype: 'fileuploadfield',
+                    name: 'profile_picture',
+                    fieldLabel: 'Profile Picture',
+                    buttonText: 'Select Image',
+                    allowBlank: true
+                }
                 /*{
                     xtype: 'component',
                     html: [

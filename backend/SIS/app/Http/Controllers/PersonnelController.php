@@ -19,9 +19,29 @@ class PersonnelController extends Controller
 
     public function store(Request $request)
     {
-        //show form for creating new resource
-        $personnel = Personnel::create($request->all());
-        return response()->json($personnel, 201);
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'registration' => 'required|string',
+            'idnumber' => 'required|string',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('profile_picture')) {
+            $image = $request->file('profile_picture');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/profile_pictures'), $imageName);
+            $data['profile_picture'] = 'images/profile_pictures/' . $imageName;
+        }
+
+        $personnel = Personnel::create($data);
+        return response()->json([
+            'success' => true,
+            'data' => $personnel
+        ], 201);
+        //return response()->json($personnel, 201);
     }
 
     public function show($id)

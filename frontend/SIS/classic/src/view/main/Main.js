@@ -17,8 +17,9 @@ Ext.define('SIS.view.main.Main', {
         'SIS.view.main.MainModel',
         'SIS.view.main.List',
         'SIS.view.main.Personnel',
-        'SIS.view.main.SignupForm',
+        'SIS.view.main.LoginForm',
         'SIS.view.main.Products',
+        'SIS.view.main.SignupForm'
 
     ],
 
@@ -41,7 +42,8 @@ Ext.define('SIS.view.main.Main', {
             },
             flex: 0
         },
-        iconCls: 'fa-th-list'
+        iconCls: 'fa-th-list',
+        
     },
 
     tabBar: {
@@ -101,8 +103,8 @@ Ext.define('SIS.view.main.Main', {
     }, {
         title: 'Settings',
         iconCls: 'fa-cog',
-        bind: {
-            html: '{loremIpsum}'
-        }
+        items: [{
+            xtype: ''
+        }]
     }]
 });

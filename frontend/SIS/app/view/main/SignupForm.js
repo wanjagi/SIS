@@ -1,41 +1,68 @@
-/**
- * Demonstrates a simple registration form.
- */
 Ext.define('SIS.view.main.SignupForm', {
     extend: 'Ext.form.Panel',
     xtype: 'signupform',
 
-    frame: true,
-    title: 'Register',
+    layout: 'vbox',
+    width: 400,
     bodyPadding: 10,
-    scrollable: true,
-    width: 355,
+    title: 'Sign Up',
 
-    fieldDefaults: {
-        labelAlign: "right",
-        labelWidth: 115,
-        msgTarget: 'side'
-    },
-
-    items: [{
-        xtype: 'fieldset',
-        title: 'User Info',
-        defaultType: 'textfield',
-        defaults: {
-            anchor: '100%'
+    items: [
+        {
+            xtype: 'textfield',
+            name: 'name',
+            fieldLabel: 'Name',
+            allowBlank: false
         },
+        {
+            xtype: 'textfield',
+            name: 'email',
+            fieldLabel: 'Email',
+            allowBlank: false
+        },
+        {
+            xtype: 'textfield',
+            name: 'password',
+            fieldLabel: 'Password',
+            inputType: 'password',
+            allowBlank: false
+        },
+        {
+            xtype: 'textfield',
+            name: 'password_confirmation',
+            fieldLabel: 'Confirm Password',
+            inputType: 'password',
+            allowBlank: false
+        }
+    ],
 
-        items: [
-            { allowBlank: false, fieldLabel: 'User Name', name: 'user', emptyText: 'user name' },
-            { allowBlank: false, fieldLabel: 'Email', name: 'email', emptyText: 'email' },
-            { allowBlank: false, fieldLabel: 'Password', name: 'pass', emptyText: 'password', inputType: 'password' },
-            { allowBlank: false, fieldLabel: 'Verify', name: 'pass', emptyText: 'password', inputType: 'password' }
-        ]
-    }],
+    buttons: [
+        {
+            text: 'Sign Up',
+            formBind: true,
+            handler: function(button) {
+                var form = button.up('form').getForm();
 
-    buttons: [{
-        text: 'Register',
-        disabled: true,
-        formBind: true
-    }]
+                if (form.isValid()) {
+                    var values = form.getValues();
+
+                    Ext.Ajax.request({
+                        url: 'http://localhost:8000/api/register',
+                        method: 'POST',
+                        jsonData: values,
+                        success: function(response) {
+                            Ext.Msg.alert('Success', 'Registration successful. Please log in.');
+                            Ext.Viewport.removeAll();
+                            Ext.create('SIS.view.main.Main');
+                            //Ext.create('SIS.view.main.Main');
+                            //Ext.create('SIS.view.main.LoginForm');
+                        },
+                        failure: function(response) {
+                            Ext.Msg.alert('Failure', 'Registration failed.');
+                        }
+                    });
+                }
+            }
+        }
+    ]
 });

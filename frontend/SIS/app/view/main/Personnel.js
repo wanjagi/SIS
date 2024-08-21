@@ -9,6 +9,8 @@ Ext.define('SIS.view.main.Personnel',{
 
     title:'Basic Info',
 
+    scrollable: true,
+
     store:{
         type:'personnel'
     },
@@ -19,6 +21,19 @@ Ext.define('SIS.view.main.Personnel',{
     },
 
     columns:[
+        {
+            text: 'Profile picture',
+            dataIndex:'profile_picture',
+            flex: 2,
+            renderer: function(value) {
+                if (value) {
+                    // Assuming the images are stored in 'public/images/profile_pictures/'
+                    var imageUrl = 'http://localhost:8000/' + value;
+                    return '<img src="' + imageUrl + '" alt="Profile Picture" style="height: 50px; width: 50px; border-radius: 50%;">';
+                }
+                return 'No Image';
+            }
+        },
         {text:'Name', dataIndex:'name', flex:3},
         {text:'Email Address', dataIndex:'email', flex:3},
         {text:'Registration', dataIndex:'registration', flex:2},
