@@ -1,6 +1,6 @@
 // controller for the personnel view
 
-Ext.define('SIS.view.main.PersonnelController', {
+Ext.define('SIS.view.main.controllers.PersonnelController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.personnel',
 
@@ -9,7 +9,7 @@ Ext.define('SIS.view.main.PersonnelController', {
     //launches form
     //onSaveClick function to handle saving to db
     onAddClick: function(){
-        Ext.create('SIS.view.main.PersonnelForm', {
+        Ext.create('SIS.view.main.forms.PersonnelForm', {
             title: 'Add New Record',
             buttons: [
                 {
@@ -21,34 +21,7 @@ Ext.define('SIS.view.main.PersonnelController', {
     },
 
 
-    //handle edit button click
-    //get current grid
-    //check if there is a selection
-    /*onEditClick: function(){
-        var grid = this.getView();
-        var selection = grid.getSelection()[0];
-        if (selection) {
-            var editWindow = Ext.create('SIS.view.main.PersonnelForm', {
-                title: 'Edit Record',
-
-                buttons: [
-                    {
-                        text:'Save',
-                        handler:'onSaveClick'
-                    }
-                ],
-                //record: selection
-
-                
-            }).show();
-            //load the current selsction into the form
-            var form = editWindow.down('form');
-            form.loadRecord(selection);
-            editWindow.show();
-        } else {
-            Ext.Msg.alert('Error', 'Select a record to edit');
-        }
-    },*/
+    
 
     onEditClick: function(button) {
         var record;
@@ -68,10 +41,10 @@ Ext.define('SIS.view.main.PersonnelController', {
         //var selection = grid.getSelectionModel().getSelection();
 
         if (record) {
-            // Automatically select the record in the grid
+            // select the record in the grid
             grid.getSelectionModel().select(record);
 
-            var editWindow = Ext.create('SIS.view.main.PersonnelForm', {
+            var editWindow = Ext.create('SIS.view.main.forms.PersonnelForm', {
                 title: 'Edit Record',
                 buttons: [
                     {
@@ -96,6 +69,7 @@ Ext.define('SIS.view.main.PersonnelController', {
         var grid = this.getView();
         var selection = grid.getSelectionModel().getSelection();
         //var selection = grid.getSelection()[0];
+        //handle multuple selections
         if (selection.length > 0) {
             Ext.Msg.confirm('Confirm', 'Are you sure you want to delete', function(button){
                 if (button === 'yes'){
@@ -118,7 +92,7 @@ Ext.define('SIS.view.main.PersonnelController', {
         var values = form.getValues();
 
     
-        var store = Ext.getStore('personnel'); // Correct store lookup
+        var store = Ext.getStore('personnel'); // store lookup
     
         if (!store) {
             console.error("Store not found");
@@ -146,6 +120,7 @@ Ext.define('SIS.view.main.PersonnelController', {
     },
 
 
+    //double clicking on an item
     onItemDbClick: function(view, record, item, index, e, eOpts) {
         Ext.create('Ext.window.Window', {
             title: 'Personnel Details',
@@ -197,30 +172,15 @@ Ext.define('SIS.view.main.PersonnelController', {
         }).show();
     },
 
-    /*onDeleteSelectedClick: function() {
-        var grid = this.getView();
-        var selection = grid.getSelectionModel().getSelection();
-
-        if (selection.length > 0) {
-            Ext.Msg.confirm('Confirm', 'Are you sure you want to delete the selected records?', function(choice) {
-                if (choice === 'yes') {
-                    grid.getStore().remove(selection);
-                    grid.getStore().sync();
-                }
-            });
-        } else {
-            Ext.Msg.alert('Error', 'No records selected for deletion.');
-        }
-    }*/
+   
 
     onEditPersonnelWidgetClick: function(view, recIndex, cellIndex, item, e, record,button) {
         var grid = this.getView();
+         // Automatically select the record in the grid
         grid.getSelectionModel().select(record);
         if (record) {
-            // Automatically select the record in the grid
-            
-
-            var editWindow = Ext.create('SIS.view.main.PersonnelForm', {
+           
+            var editWindow = Ext.create('SIS.view.main.forms.PersonnelForm', {
                 title: 'Edit Record',
                 buttons: [
                     {
@@ -238,6 +198,7 @@ Ext.define('SIS.view.main.PersonnelController', {
             Ext.Msg.alert('Error', 'No record selected for editing');
         }
     },
+    
 
 
     onDeletePersonnelWidgetClick: function(view, recIndex, cellIndex, item, e, record, button){
@@ -245,7 +206,113 @@ Ext.define('SIS.view.main.PersonnelController', {
         grid.getStore().remove(record);
         grid.getStore().sync();
         Ext.Msg.alert('Success', 'Record has been deleted successfully.');
+    },
+
+
+
+    onViewPersonnelWidgetClick: function(view, recIndex, cellIndex, item, e, record, button){
+        //var grid = this.getView();
+
+        Ext.create('Ext.window.Window', {
+            title: 'Personnel Details',
+            modal: true,
+            width: 400,
+            layout: 'fit',
+            items: [
+                {
+                    xtype: 'panel',
+                    bodyPadding: 10,
+                    defaults: {
+                        xtype: 'displayfield',
+                        labelWidth: 120,
+                        anchor: '100%',
+                    },
+                    items: [
+                        {
+                            fieldLabel: 'Profile Picture',
+                            value: '<img src="http://localhost:8000/' + record.get('profile_picture') + '" style="height: 100px; width: 100px; border-radius: 50%;">',
+                            fieldStyle: 'text-align:center'
+                        },
+                        {
+                            fieldLabel: 'Name',
+                            value: record.get('name')
+                        },
+                        {
+                            fieldLabel: 'Email Address',
+                            value: record.get('email')
+                        },
+                        {
+                            fieldLabel: 'Registration',
+                            value: record.get('registration')
+                        },
+                        {
+                            fieldLabel: 'ID Number',
+                            value: record.get('idnumber')
+                        }
+                    ]
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Close',
+                    handler: function(button) {
+                        button.up('window').close();
+                        Toast('closed');
+
+                    }
+                }
+            ]
+        }).show();
     }
+
+
+
+    //handle edit button click
+    //get current grid
+    //check if there is a selection
+    /*onEditClick: function(){
+        var grid = this.getView();
+        var selection = grid.getSelection()[0];
+        if (selection) {
+            var editWindow = Ext.create('SIS.view.main.PersonnelForm', {
+                title: 'Edit Record',
+
+                buttons: [
+                    {
+                        text:'Save',
+                        handler:'onSaveClick'
+                    }
+                ],
+                //record: selection
+
+                
+            }).show();
+            //load the current selsction into the form
+            var form = editWindow.down('form');
+            form.loadRecord(selection);
+            editWindow.show();
+        } else {
+            Ext.Msg.alert('Error', 'Select a record to edit');
+        }
+    },*/
+
+
+
+     /*onDeleteSelectedClick: function() {
+        var grid = this.getView();
+        var selection = grid.getSelectionModel().getSelection();
+
+        if (selection.length > 0) {
+            Ext.Msg.confirm('Confirm', 'Are you sure you want to delete the selected records?', function(choice) {
+                if (choice === 'yes') {
+                    grid.getStore().remove(selection);
+                    grid.getStore().sync();
+                }
+            });
+        } else {
+            Ext.Msg.alert('Error', 'No records selected for deletion.');
+        }
+    }*/
 
 
 

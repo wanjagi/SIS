@@ -4,7 +4,7 @@ Ext.define('SIS.view.main.Products',{
 
     requires: [
         'SIS.store.Product',
-        'SIS.view.main.ProductController'
+        'SIS.view.main.controllers.ProductController'
     ],
 
     title: 'Products',

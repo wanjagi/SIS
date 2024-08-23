@@ -1,11 +1,11 @@
 
-Ext.define('SIS.view.main.ProductController',{
+Ext.define('SIS.view.main.controllers.ProductController',{
 
     extend: 'Ext.app.ViewController',
     alias: 'controller.product',
 
     onAddProductClick: function(){
-        Ext.create('SIS.view.main.ProductForm', {
+        Ext.create('SIS.view.main.forms.ProductForm', {
             title: 'Add New Product',
             buttons: [
                 {

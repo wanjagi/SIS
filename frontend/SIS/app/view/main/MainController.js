@@ -8,9 +8,9 @@ Ext.define('SIS.view.main.MainController', {
     alias: 'controller.main',
 
     requires:[
-        'SIS.view.main.PersonnelController',
-        'SIS.view.main.ProductController',
-        'SIS.view.main.PersonnelForm',
+        'SIS.view.main.controllers.PersonnelController',
+        'SIS.view.main.controllers.ProductController',
+        'SIS.view.main.forms.PersonnelForm',
         'SIS.store.Personnel',
         'SIS.store.Product'
 
@@ -18,7 +18,7 @@ Ext.define('SIS.view.main.MainController', {
 
 
 
-    onLogoutClick: function() {
+    /*onLogoutClick: function() {
         Ext.Ajax.request({
             url: 'http://localhost:8000/api/logout',
             method: 'POST',
@@ -35,9 +35,11 @@ Ext.define('SIS.view.main.MainController', {
             },
             failure: function(response) {
                 Ext.Msg.alert('Failure', 'Log-out failed.');
+
+                //Ext.create('SIS.view.main.LoginForm');
             }
         });
-    },
+    },*/
 
 
     //fix server response **

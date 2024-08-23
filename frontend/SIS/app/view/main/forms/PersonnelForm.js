@@ -1,26 +1,20 @@
 //form for add edtit operations
-Ext.define('SIS.view.main.RegistrationForm', {
-    extend: 'Ext.form.Panel',
-    xtype: 'registrationform',
+Ext.define('SIS.view.main.forms.PersonnelForm', {
+    extend: 'Ext.window.Window',
+    xtype: 'personnelform',
 
     requires: [
         'Ext.form.Panel',
         'Ext.form.field.Text'
     ],
 
-    title: 'Registration Form',
     layout: 'fit',
-    frame: true,
-    resizable: true,
-    width: 610,
-    minWidth: 610,
-    minHeight: 300,
-    bodyPadding: 0,
     width: 400,
     modal: true,
     items: [
         {xtype: 'form',
             bodyPadding: 10,
+            allowBlank: false,
             defaults: {
                 anchor: '100%',
                 xtype: 'textfield',
@@ -29,6 +23,7 @@ Ext.define('SIS.view.main.RegistrationForm', {
             },
 
             items: [
+                
                 {
                     fieldLabel: 'Name',
                     name: 'name',
@@ -44,7 +39,7 @@ Ext.define('SIS.view.main.RegistrationForm', {
                 },
                 {
                     fieldLabel: 'Registration',
-                    emptyText: 'Registratio Number',
+                    emptyText: 'Registration Number',
                     msgTarget: 'under',
                     name: 'registration'
                 },
@@ -76,23 +71,7 @@ Ext.define('SIS.view.main.RegistrationForm', {
                     }
                 }*/
                 
-            ],
-            buttons: [
-                { 
-                    text: 'Submit',
-                    handler: 'onRegSaveClick' ,
-                    disabled: true,
-                    formBind: true
-
-                    
-                },
-                { 
-                    text: 'New',
-                    handler: 'onNewRegClick',
-                    iconCls: 'fa fa-plus'
-                 }
             ]
-
             
         }
     ]

@@ -1,7 +1,7 @@
 //form for add edtit operations
-Ext.define('SIS.view.main.PersonnelForm', {
+Ext.define('SIS.view.main.forms.ProductForm', {
     extend: 'Ext.window.Window',
-    xtype: 'personnelform',
+    xtype: 'productform',
 
     requires: [
         'Ext.form.Panel',
@@ -27,35 +27,27 @@ Ext.define('SIS.view.main.PersonnelForm', {
                 {
                     fieldLabel: 'Name',
                     name: 'name',
-                    emptyText: 'Full Name',
+                    emptyText: 'Name',
                     msgTarget: 'under'
                 },
                 {
-                    fieldLabel: 'Email',
-                    name: 'email',
-                    emptyText: 'Email',
-                    msgTarget: 'under',
-                    vtype: 'email'
-                },
-                {
-                    fieldLabel: 'Registration',
-                    emptyText: 'Registration Number',
-                    msgTarget: 'under',
-                    name: 'registration'
-                },
-                {
-                    fieldLabel:'ID Number',
-                    name: 'idnumber',
-                    emptyText: 'ID number',
+                    fieldLabel: 'Quantity',
+                    name: 'quantity',
+                    emptyText: 'Quantity',
                     msgTarget: 'under'
                 },
                 {
-                    xtype: 'fileuploadfield',
-                    name: 'profile_picture',
-                    fieldLabel: 'Profile Picture',
-                    buttonText: 'Select Image',
-                    allowBlank: true
-                }
+                    fieldLabel: 'Price',
+                    emptyText: 'Price',
+                    msgTarget: 'under',
+                    name: 'price'
+                },
+                {
+                    fieldLabel:'Description',
+                    name: 'description',
+                    emptyText: 'Description',
+                    msgTarget: 'under'
+                },
                 /*{
                     xtype: 'component',
                     html: [

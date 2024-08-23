@@ -17,11 +17,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
-Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
+//Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
+Route::middleware('auth:sanctum')->post('/logout', [App\Http\Controllers\AuthController::class, 'logout']);
+
+
 
 /*Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
     $request->user()->tokens()->delete();  // Delete all tokens for the user
-    return response()->json(['message' => 'Logged out successfully']);
+    return response()->json(['success' => 'Logged out successfully']);
 });*/
 
 

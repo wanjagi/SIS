@@ -22,18 +22,33 @@ Ext.define('SIS.store.Personnel', {
     }*/
 
 
-       proxy:{
-            type:'rest',
-            url:'http://localhost:8000/api/personnel',
-            reader:{
-                type:'json',
-                rootProperty:'data'
-            },
-            writer:{
-                type:'json'
-            }
+    /*proxy:{
+        type:'rest',
+        url:'http://localhost:8000/api/personnel',
+        reader:{
+            type:'json',
+            rootProperty:'data'
         },
-        autoLoad: true
+        writer:{
+            type:'json'
+        }
+    },
+    autoLoad: true*/
+
+
+    proxy: {
+        type: 'ajax',  // Change from 'rest' to 'ajax'
+        url: 'http://localhost:8000/api/personnel',
+        reader: {
+            type: 'json',
+            rootProperty: 'data'
+        },
+        writer: {
+            type: 'json'
+        }
+    },
+    autoLoad: true
+    
 });
 
     

@@ -4,12 +4,11 @@ Ext.define('SIS.view.main.Personnel',{
 
     requires:[
         'SIS.store.Personnel',
-        'SIS.view.main.PersonnelController'
+        'SIS.view.main.controllers.PersonnelController'
     ],
 
     title:'Basic Info',
-
-    scrollable: true,
+    collapsible: true,
 
     store:{
         type:'personnel'
@@ -20,14 +19,17 @@ Ext.define('SIS.view.main.Personnel',{
         mode: 'MULTI' // multiple selections
     },
 
+    scrollable: true,
+    height: 500,
+
     columns:[
         {
-            text: 'Profile picture',
+            text: 'Profile',
             dataIndex:'profile_picture',
             flex: 2,
             renderer: function(value) {
                 if (value) {
-                    // Assuming the images are stored in 'public/images/profile_pictures/'
+                    // the images are stored in 'public/images/profile_pictures/'
                     var imageUrl = 'http://localhost:8000/' + value;
                     return '<img src="' + imageUrl + '" alt="Profile Picture" style="height: 50px; width: 50px; border-radius: 50%;">';
                 }
@@ -45,8 +47,21 @@ Ext.define('SIS.view.main.Personnel',{
             sortable: false,
             menuDisabled: true,
             items: [{
+                iconCls: 'fa fa-eye',
+                tooltip: 'View Record',
+                handler: 'onViewPersonnelWidgetClick'
+            }
+        ]
+        },
+        {
+            xtype: 'actioncolumn',
+
+            width: 30,
+            sortable: false,
+            menuDisabled: true,
+            items: [{
                 iconCls: 'fa fa-list',
-                tooltip: 'Edit Product',
+                tooltip: 'Edit Record',
                 handler: 'onEditPersonnelWidgetClick'
             }
         ]
@@ -59,7 +74,7 @@ Ext.define('SIS.view.main.Personnel',{
             menuDisabled: true,
             items: [{
                 iconCls: 'fa fa-trash',
-                tooltip: 'Delete Product',
+                tooltip: 'Delete Record',
                 handler: 'onDeletePersonnelWidgetClick'
             }
         ]

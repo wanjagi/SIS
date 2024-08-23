@@ -6,7 +6,7 @@ Ext.define( 'SIS.store.Product',{
     model: 'SIS.model.Product',
 
     proxy:{
-        type:'rest',
+        type:'ajax',
         url:'http://localhost:8000/api/product',
         reader:{
             type:'json',
